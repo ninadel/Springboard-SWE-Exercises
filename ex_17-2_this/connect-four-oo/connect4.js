@@ -2,21 +2,17 @@
 // PART 2: Small improvements
 
 class Game {
-  constructor(height, width, p1Color = "red", p2Color = "blue") {
+  constructor(p1, p2, height = 7, width = 6) {
+    this.players = [p1, p2];
     this.HEIGHT = height;
     this.WIDTH = width;
-    this.currPlayer = 1;
+    this.currPlayer = p1;
     this.board = [];
     this.makeBoard();
     this.makeHtmlBoard();
     this.gameOver = false;
-    this.p1Color = p1Color;
-    this.p2Color = p2Color;
-    // validate color
-    if (true) {
-      this.p1Color = p1Color;
-      this.p2color = p2Color;
-    }
+    this.p1Color = p1.color;
+    this.p2Color = p2.color;
   }
 
   // todo
@@ -83,10 +79,10 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement("div");
     piece.classList.add("piece");
-    piece.classList.add(`p${this.currPlayer}`);
+    // piece.classList.add(`${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
     console.log("player", this.currPlayer);
-    if (this.currPlayer === 1) {
+    if (this.currPlayer === this.players[0]) {
       piece.style.backgroundColor = this.p1Color;
     } else {
       piece.style.backgroundColor = this.p2Color;
@@ -129,7 +125,8 @@ class Game {
       }
 
       // switch players
-      this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+      this.currPlayer =
+        this.currPlayer === this.players[0] ? this.players[1] : this.players[0];
     }
   }
 
@@ -186,6 +183,12 @@ class Game {
         }
       }
     }
+  }
+}
+
+class Player {
+  constructor(color) {
+    this.color = color;
   }
 }
 
@@ -371,7 +374,11 @@ class Game {
 // makeHtmlBoard();
 
 function startNewGame() {
-  let newGame = new Game(7, 6);
+  // create player
+  let player1 = new Player("red");
+  // create player
+  let player2 = new Player("blue");
+  let newGame = new Game(player1, player2, 7, 6);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
