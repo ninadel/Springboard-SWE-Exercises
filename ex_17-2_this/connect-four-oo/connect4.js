@@ -88,7 +88,6 @@ class Game {
   }
 
   handleClick(evt) {
-    console.log("gameOver", this.gameOver);
     if (!this.gameOver) {
       // get x from ID of clicked cell
       const x = +evt.target.id;
@@ -234,6 +233,5 @@ function startNewGame() {
 // on page load, add an event listener to the button which calls startNewGame
 document.addEventListener("DOMContentLoaded", function () {
   const startButton = this.querySelector("#start");
-  console.log(startButton);
   startButton.addEventListener("click", startNewGame);
 });
