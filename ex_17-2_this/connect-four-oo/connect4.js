@@ -373,12 +373,50 @@ class Player {
 // move to Game class
 // makeHtmlBoard();
 
+function isValidColor(color) {
+  let s = new Option().style;
+  s.color = color;
+  if (s.color == color.toLowerCase()) {
+    return true;
+  } else {
+    return isHexColor(color);
+  }
+
+  // return 'false' if color wasn't assigned
+  // return s.color == strColor.toLowerCase();
+}
+
+function isHexColor(hex) {
+  let hexValue = hex.slice(1);
+  return (
+    typeof hexValue === "string" &&
+    hexValue.length === 6 &&
+    !isNaN(Number("0x" + hexValue))
+  );
+}
 function startNewGame() {
-  // create player
-  let player1 = new Player("red");
-  // create player
-  let player2 = new Player("blue");
-  let newGame = new Game(player1, player2, 7, 6);
+  let validColors = false;
+  let p1Color = document.getElementById("p1-color").value;
+  let p2Color = document.getElementById("p2-color").value;
+  if (
+    isValidColor(p1Color) &&
+    isValidColor(p2Color) &&
+    !(p1Color === p2Color)
+  ) {
+    validColors = true;
+  }
+  if (!validColors) {
+    // create player
+    console.log("invalid colors");
+    let player1 = new Player("red");
+    let player2 = new Player("blue");
+    let newGame = new Game(player1, player2, 7, 6);
+  } else {
+    console.log("valid colors");
+    let player1 = new Player(p1Color);
+    let player2 = new Player(p2Color);
+    let newGame = new Game(player1, player2, 7, 6);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
