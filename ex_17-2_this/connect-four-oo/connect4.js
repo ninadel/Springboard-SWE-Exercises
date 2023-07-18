@@ -27,8 +27,13 @@ class Game {
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement("tr");
     top.setAttribute("id", "column-top");
+
     // Q: bind?
-    top.addEventListener("click", this.handleClick);
+    // store a reference to the handleClick bound function
+    // so that we can remove the event listener correctly later
+    this.handleGameClick = this.handleClick.bind(this);
+
+    top.addEventListener("click", this.handleGameClick);
 
     for (let x = 0; x < this.WIDTH; x++) {
       const headCell = document.createElement("td");
@@ -52,7 +57,7 @@ class Game {
     }
   }
 
-  findSplotForCol(x) {
+  findSpotForCol(x) {
     for (let y = this.HEIGHT - 1; y >= 0; y--) {
       if (!this.board[y][x]) {
         return y;
@@ -106,7 +111,7 @@ class Game {
   }
 
   checkForWin() {
-    function _win(cells) {
+    const _win = (cells) => {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
       //  - returns true if all are legal coordinates & all match currPlayer
@@ -121,7 +126,7 @@ class Game {
           x < this.WIDTH &&
           this.board[y][x] === this.currPlayer
       );
-    }
+    };
 
     for (let y = 0; y < this.HEIGHT; y++) {
       for (let x = 0; x < this.WIDTH; x++) {
