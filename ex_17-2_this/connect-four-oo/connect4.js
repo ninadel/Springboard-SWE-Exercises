@@ -183,7 +183,7 @@ class Player {
 
 // this function validates whether a string is a valid color name string or hexadecimal
 function isValidColor(color) {
-  let s = new Option().style;
+  const s = new Option().style;
   s.color = color;
   if (s.color == color.toLowerCase()) {
     return true;
@@ -194,7 +194,7 @@ function isValidColor(color) {
 
 // this function validates whether a string is a valid hexadecimal
 function isHexColor(hex) {
-  let hexValue = hex.slice(1);
+  const hexValue = hex.slice(1);
   return (
     typeof hexValue === "string" &&
     hexValue.length === 6 &&
@@ -205,8 +205,10 @@ function isHexColor(hex) {
 // this function initiates a new connect 4 game
 function startNewGame() {
   let validColors = false;
-  let p1Color = document.getElementById("p1-color").value;
-  let p2Color = document.getElementById("p2-color").value;
+  let player1 = null;
+  let player2 = null;
+  const p1Color = document.getElementById("p1-color").value;
+  const p2Color = document.getElementById("p2-color").value;
   // if both colors provided by user are valid and not equal
   if (
     isValidColor(p1Color) &&
@@ -218,14 +220,14 @@ function startNewGame() {
   // if combination of colors provided are not valid
   if (!validColors) {
     // create 2 player instances and revert to default color values to start game
-    let player1 = new Player("red");
-    let player2 = new Player("blue");
-    let newGame = new Game(player1, player2, 7, 6);
+    player1 = new Player("red");
+    player2 = new Player("blue");
+    const newGame = new Game(player1, player2, 7, 6);
   } else {
     // create 2 player instances and use user provided color values to start game
-    let player1 = new Player(p1Color);
-    let player2 = new Player(p2Color);
-    let newGame = new Game(player1, player2, 7, 6);
+    player1 = new Player(p1Color);
+    player2 = new Player(p2Color);
+    const newGame = new Game(player1, player2, 7, 6);
   }
 }
 
