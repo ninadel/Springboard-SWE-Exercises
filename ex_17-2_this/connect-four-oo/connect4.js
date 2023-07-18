@@ -25,6 +25,7 @@ class Game {
     console.log("makeHtmlBoard()");
 
     const board = document.getElementById("board");
+    board.innerHtml = "";
 
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement("tr");
@@ -84,7 +85,7 @@ class Game {
   }
 
   handleClick(evt) {
-    console.log(this.gameOver);
+    console.log("gameOver", this.gameOver);
     if (!this.gameOver) {
       console.log("handleClick");
       // get x from ID of clicked cell
@@ -353,4 +354,12 @@ class Game {
 // move to Game class
 // makeHtmlBoard();
 
-const testGame = new Game(7, 6);
+function startNewGame() {
+  let newGame = new Game(7, 6);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const startButton = this.querySelector("#start");
+  console.log(startButton);
+  startButton.addEventListener("click", startNewGame);
+});
