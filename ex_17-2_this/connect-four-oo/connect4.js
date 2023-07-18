@@ -2,7 +2,7 @@
 // PART 2: Small improvements
 
 class Game {
-  constructor(height, width) {
+  constructor(height, width, p1Color = "red", p2Color = "blue") {
     this.HEIGHT = height;
     this.WIDTH = width;
     this.currPlayer = 1;
@@ -10,6 +10,13 @@ class Game {
     this.makeBoard();
     this.makeHtmlBoard();
     this.gameOver = false;
+    this.p1Color = p1Color;
+    this.p2Color = p2Color;
+    // validate color
+    if (true) {
+      this.p1Color = p1Color;
+      this.p2color = p2Color;
+    }
   }
 
   // todo
@@ -25,6 +32,10 @@ class Game {
     console.log("makeHtmlBoard()");
 
     const board = document.getElementById("board");
+    // const pieceP1 = document.getElementsByClassName(".piece.p1");
+    // pieceP1.style.backgroundColor = this.p1Color;
+    // const pieceP2 = document.getElementsByClassName(".piece.p2");
+    // pieceP1.style.backgroundColor = this.p2Color;
     board.innerHTML = "";
 
     // make column tops (clickable area for adding a piece to that column)
@@ -74,7 +85,12 @@ class Game {
     piece.classList.add("piece");
     piece.classList.add(`p${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
-
+    console.log("player", this.currPlayer);
+    if (this.currPlayer === 1) {
+      piece.style.backgroundColor = this.p1Color;
+    } else {
+      piece.style.backgroundColor = this.p2Color;
+    }
     const spot = document.getElementById(`${y}-${x}`);
     spot.append(piece);
   }
