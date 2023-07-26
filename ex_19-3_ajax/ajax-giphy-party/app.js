@@ -12,15 +12,19 @@
 
 // button event listeners need to prevent default
 
+const partyImages = new Set();
+const gifContainer = document.getElementById("gif-container");
+let offset = 0;
+let uniqueImg = false;
+
 function startParty() {
   console.log("Let's get this party started!");
   const searchButton = document.getElementById("search-btn");
   const clearButton = document.getElementById("clear-btn");
-  const partyMembers = new Set();
   searchButton.addEventListener("click", function (e) {
     e.preventDefault();
   });
-  searchButton.addEventListener("click", searchGif);
+  searchButton.addEventListener("click", addGif);
   clearButton.addEventListener("click", clearParty);
 }
 
@@ -28,8 +32,13 @@ function getDownSizedGif(gif) {
   return gif.data.data[0].images.downsized.url;
 }
 
+function getGifRoot(url) {
+  console.log(url.slice(0, url.indexOf("?")));
+  return url.slice(0, url.indexOf("?"));
+}
+
 // function which finds a gif and appends it to the page
-async function searchGif(term, n = 1, offset = 0) {
+async function searchGif(term, o = 2, n = 1) {
   console.log("searching");
   const endpoint = "https://api.giphy.com/v1/gifs/search";
   const key = "FzuWJvCfRf2eX3gj35rlYcSOuwroI5KC";
@@ -38,26 +47,52 @@ async function searchGif(term, n = 1, offset = 0) {
       api_key: key,
       q: term,
       limit: n,
+      offset: o,
     },
   });
   console.log(result);
   console.log(result.data.data[0].images.downsized.url);
-  let newImg = new Image();
-  let newImgUrl = result.data.data[0].images.downsized.url;
-  newImg.src = newImgUrl;
-  const gifContainer = document.getElementById("gif-container");
-  gifContainer.append(newImg);
+  //   let newImg = new Image();
+  newImgUrl = getDownSizedGif(result);
+  //   newImg.src = newImgUrl;
+  // return new image url
+  return newImgUrl;
 }
 
-function addGif(term) {
+async function addGif(term) {
   console.log("adding");
-  let offset = 0;
+  let newImgUrl = null;
+  uniqueImg = false;
   // get a gif
   // check if gif is in set already
+  // add image to page
+  const newImg = new Image();
+  while (!uniqueImg) {
+    offset += 1;
+    newImgUrl = await searchGif(term, offset);
+    newImgUrlRoot = getGifRoot(newImgUrl);
+    if (!partyImages.has(newImgUrlRoot)) {
+      partyImages.add(newImgUrlRoot);
+      uniqueImg = true;
+    }
+  }
+  newImg.src = newImgUrl;
+  //   partyImages.add(newImgUrl);
+  const newImgDiv = document.createElement("div");
+  newImgDiv.classList.add("gif");
+  newImgDiv.append(newImg);
+  gifContainer.append(newImgDiv);
+  offset = 0;
+  uniqueImg = false;
+  console.log("partyImages length", partyImages.size);
+  console.log(partyImages);
+  return partyImages;
 }
 
 function clearParty() {
   console.log("clearing");
+  partyImages.clear();
+  gifContainer.innerHTML = "";
 }
 
 document.addEventListener("DOMContentLoaded", startParty);
