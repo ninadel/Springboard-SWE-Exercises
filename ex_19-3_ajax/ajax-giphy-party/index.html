@@ -1,16 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Giphy Party!</title>
-</head>
-
-<body>
-
-<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.js"></script>
-<script src="app.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giphy Party!</title>
+  </head>
+  <body>
+    <h1>Giphy Partaaaaay!</h1>
+    <!-- search form: input texb box with placeholder, button to search, button to clear  -->
+    <form>
+      <div class="form">
+        <!-- <label for="name">Enter your name: </label> -->
+        <input
+          type="text"
+          name="search"
+          id="search-box"
+          placeholder="Find a gif"
+          required
+        />
+        <div class="form">
+          <input type="submit" id="search-btn" value="Party!" />
+        </div>
+        <div class="form">
+          <input type="button" id="clear-btn" value="Stop it!" />
+        </div>
+      </div>
+    </form>
+    <!-- container div that holds image divs -->
+    <div id="gif-container"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
