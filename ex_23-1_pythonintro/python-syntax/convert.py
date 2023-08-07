@@ -18,14 +18,14 @@ def convert_temp(unit_in, unit_out, temp):
     # YOUR CODE HERE
     if unit_in not in ["c", "f"]:
       return f"Invalid unit {unit_in}"
-    elif unit_out not in ["c", "f"]:
+    if unit_out not in ["c", "f"]:
       return f"Invalid unit {unit_out}"
-    elif unit_in == unit_out:
+    if unit_in == unit_out:
       return temp
-    elif unit_in == "c":
+    if unit_in == "c":
       # To convert temperatures in degrees Celsius to Fahrenheit, multiply by 1.8 (or 9/5) and add 32.
       return (temp * 1.8) + 32
-    elif unit_in == "f":
+    if unit_in == "f":
       # To convert temperatures in degrees Fahrenheit to Celsius, subtract 32 and multiply by .5556 (or 5/9).
       return (temp - 32) * (5/9)
 
