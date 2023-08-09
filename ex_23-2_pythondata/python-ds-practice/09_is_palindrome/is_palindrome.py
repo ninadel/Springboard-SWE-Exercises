@@ -21,3 +21,12 @@ def is_palindrome(phrase):
         >>> is_palindrome('Noon')
         True
     """
+    testStr = phrase.lower().replace(" ","")
+    countdown = round(len(testStr))
+    char_i = 0
+    while countdown >= 0:
+        if testStr[char_i] != testStr[len(testStr)-char_i-1]:
+            return False
+        countdown -= 1
+    return True
+

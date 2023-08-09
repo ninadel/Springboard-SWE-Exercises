@@ -16,3 +16,8 @@ def friend_date(a, b):
         >>> friend_date(sauron, gandalf)
         True
     """
+    should_date = False
+    for hobby in a[-1]:
+        if hobby in b[-1]:
+            should_date = True
+    return should_date
