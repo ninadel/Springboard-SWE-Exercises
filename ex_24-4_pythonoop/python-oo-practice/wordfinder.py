@@ -3,43 +3,33 @@ from random import choice
 
 
 class WordFinder:
-    def __init__(self, path):
-        """Create a word list from a text file"""
-        self.wordlist = self.get_words(path)
+    """Machine for finding random words from dictionary. """
 
-    def __repr__(self):
-        return f"{self.wordlist}"
+    def __init__(self, dict_file):
+        """Read dictionary and reports # items read."""
 
-    def get_words(self, path):
-        """Open the text file and create the word list"""
-        wordlist = []
-        file = open(path)
-        for line in file:
-            word = line.replace("\n", "")
-            wordlist.append(word)
-        file.close()
-        print(f"{len(wordlist)} words read")
-        return wordlist
+        dict_file = open(path)
+
+        self.words = self.parse(dict_file)
+
+        print(f"{len(self.words)} words read")
+
+    def parse(self, dict_file):
+        """Parse dict_file -> list of words."""
+
+        return [w.strip() for w in dict_file]
 
     def random(self):
-        """Get a random word form the word list"""
-        return choice(self.wordlist)
-        
+        """Return random word."""
+
+        return random.choice(self.words)
+
 
 class SpecialWordFinder(WordFinder):
-    def __init__(self, path):
-        """Create a word list from a text file"""
-        self.wordlist = self.get_words(path)
+    """Specialized WordFinder that excludes blank lines/comments. """
 
-    def get_words(self, path):
-        """Open the text file and create the word list"""
-        wordlist = []
-        file = open(path)
-        for line in file:
-            strip = line.replace("\n", "")
-            if len(strip) > 0:
-                if strip[0].isalpha():
-                    wordlist.append(strip)
-        file.close()
-        print(f"{len(wordlist)} words read")
-        return wordlist
+    def parse(self, dict_file):
+        """Parse dict_file -> list of words, skipping blanks/comments."""
+
+        return [w.strip() for w in dict_file
+                if w.strip() and not w.startswith("#")]
