@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block title %}Boggle game{% endblock %} {% block
+content %}
+<!-- for row in board -->
+<!-- render a div within the board -->
+<!-- for cell in row -->
+<!-- render a div within the row div -->
+
+<!-- form to guess words -->
+
+<!-- this is just a test board -->
+<table id="board">
+  {% for row in board %}
+  <tr class="row">
+    {% for col in row %}
+    <td class="letter">{{col}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+<form>
+  <!-- listen for enter key or check word button press -->
+  <!-- see fruit search project to suppress default behavior -->
+  <input type="text" name="word" />
+  <button>Check word</button>
+</form>
+<form action="/new_game" method="POST">
+  <button>New Game</button>
+</form>
+{% endblock %}
