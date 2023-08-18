@@ -10,7 +10,19 @@ class FlaskTests(TestCase):
 
     # does a game load if there's already one in session
 
-    # deos a new game load if there isn't one in session
+    # does a new game load if there isn't one in session
 
     # does new game button start new game
+
+    # does table have right dims
+
+    # does the game update the score
+
+    # does the game ignore repeated responses
+
+    # does the game ignore invalid words
+
+    # does the game ignore unfound words
+
+    # does the form ignore non-alpha chars
 

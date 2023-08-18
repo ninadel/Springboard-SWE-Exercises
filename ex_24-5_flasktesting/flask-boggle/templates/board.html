@@ -1,13 +1,11 @@
 {% extends 'base.html' %} {% block title %}Boggle game{% endblock %} {% block
 content %}
-<!-- for row in board -->
-<!-- render a div within the board -->
-<!-- for cell in row -->
-<!-- render a div within the row div -->
 
-<!-- form to guess words -->
+<!-- keep track of game statistics -->
+<div id="game-count">Game count:</div>
+<div id="high-score">High Score:</div>
 
-<!-- this is just a test board -->
+<!-- render boggle board -->
 <table id="board">
   {% for row in board %}
   <tr class="row">
@@ -19,11 +17,12 @@ content %}
 </table>
 <form>
   <!-- listen for enter key or check word button press -->
+  <!-- form to guess words -->
   <!-- see fruit search project to suppress default behavior -->
   <input type="text" name="word" />
   <button>Check word</button>
 </form>
-<form action="/new_game" method="POST">
+<form action="/new-game" method="POST">
   <button>New Game</button>
 </form>
 {% endblock %}
