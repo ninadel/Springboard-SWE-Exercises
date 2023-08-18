@@ -1,16 +1,74 @@
 // script should update rendering of board without refreshing
-// script will talk to API to
-// get initial board
-// send words
-// validate words
+
+// script will talk to API (via json)
+// (NOT NEEDED - this is handled by jinja template) get initial board
+// check words as json
+// check score against high score and update if needed using session
+// increment game count using session
 
 // script will do the following without API
 // keep track of word list by updating dom using ajax
 word_list = [];
-// keep track of score by updating dom uxing ajax
+// keep track of current game score by updating dom uxing ajax
 score = 0;
 // end game with timer
 timer_sec = 60;
+
+$(document).ready(function (event) {
+  $("form")
+    .on("submit", function (event) {
+      $.ajax({
+        data: {
+          word: $("#wordInput").val(),
+        },
+        type: "POST",
+        url: "/check-word",
+      });
+      pass;
+    })
+    .done(function (data) {
+      // what to do with the feedback
+      if (data.error) {
+        $("#errorAlert").text(data.error).show();
+        $("#successAlert").hide();
+      } else {
+        $("#successAlert").text(data.name).show();
+        $("#errorAlert").hide();
+      }
+    });
+  event.preventDefault();
+});
+
+// $(document).ready(function() {
+
+// 	$('form').on('submit', function(event) {
+
+// 		$.ajax({
+// 			data : {
+// 				name : $('#nameInput').val(),
+// 				email : $('#emailInput').val()
+// 			},
+// 			type : 'POST',
+// 			url : '/process'
+// 		})
+// 		.done(function(data) {
+
+// 			if (data.error) {
+// 				$('#errorAlert').text(data.error).show();
+// 				$('#successAlert').hide();
+// 			}
+// 			else {
+// 				$('#successAlert').text(data.name).show();
+// 				$('#errorAlert').hide();
+// 			}
+
+// 		});
+
+// 		event.preventDefault();
+
+// 	});
+
+// });
 
 // INSTRUCTIONS
 

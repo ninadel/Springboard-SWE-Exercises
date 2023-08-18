@@ -26,3 +26,9 @@ class FlaskTests(TestCase):
 
     # does the form ignore non-alpha chars
 
+    # does API return JSON
+
+    # does session board reset
+
+    # does the session score reset for new game
+
