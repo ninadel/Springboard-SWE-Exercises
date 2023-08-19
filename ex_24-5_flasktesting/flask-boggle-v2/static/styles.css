@@ -4,10 +4,7 @@ body {
 #game-container {
   display: block;
   position: relative;
-  width: 260px;
-  height: 400px;
   margin: auto;
-  top: 400px;
 }
 
 td {

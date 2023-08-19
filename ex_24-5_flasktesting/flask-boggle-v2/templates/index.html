@@ -12,11 +12,16 @@ content %}
     </tr>
     {% endfor %}
   </table>
-  <div id="game-form"></div>
+  <div id="game-form">
+    <form method="POST" class="add-word">
+      <input name="word" class="word" autofocus />
+      <button>Enter</button>
+    </form>
+  </div>
   <div id="game-stats">
     <!-- keep track of game statistics -->
-    <div id="game-count">Game count</div>
-    <div id="high-score">High score</div>
+    <div id="game-count">Game count {{game_count}}</div>
+    <div id="high-score">High score {{high_score}}</div>
   </div>
   <!-- form controls will be appended to div with js -->
 </div>

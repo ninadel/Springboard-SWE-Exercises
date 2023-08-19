@@ -1,11 +1,10 @@
-from flask import Flask, request, render_template, session, redirect, jsonify
-from random import randint,  choice, sample
+from flask import Flask, request, render_template, jsonify, session
 from flask_debugtoolbar import DebugToolbarExtension
 from boggle import Boggle
 
-app = Flask(__name__)
 
-app.config['SECRET_KEY'] = "chickenzarecool21837"
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "fdfgkjtjkkg45yfdb"
 debug = DebugToolbarExtension(app)
 
 boggle_game = Boggle()
@@ -21,7 +20,7 @@ def home_page():
     else:
         session['game-count'] = session.get('game-count', 0)
     session['high-score'] = session.get('high-score', 0)
-    return render_template("index.html", board=board)
+    return render_template("index.html", board=board, high_score=session['high-score'], game_count=session['game-count'])
 
 # route to get board
 @app.route('/get-board')

@@ -2,18 +2,18 @@
 <html>
   <head>
     <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <h1>Let's play boggle</h1>
     {% block content %}BODY CONTENT GOES HERE{% endblock %}
   </body>
 
-  <script src="https://unpkg.com/jquery"></script>
-  <script src="https://unpkg.com/axios/dist/axios.js"></script>
-  <script src="/static/js/script.js"></script>
-  <script src="/static/js/boggle.js"></script>
+  <script src="http://unpkg.com/jquery"></script>
+  <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+  <script src="/static/boggle.js"></script>
+  <script src="/static/script.js"></script>
   <script>
-    let boggle = new BoggleGame();
+    let game = new BoggleGame("boggle", 60);
   </script>
 </html>

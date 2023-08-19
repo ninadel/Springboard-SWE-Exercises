@@ -3,19 +3,15 @@ class BoggleGame {
     this.timerDuration = timerDuration;
     this.words = new Set();
     this.score = 0;
-    this.playing = True;
+    this.playing = true;
     // create form and append to webpage
     // add a submit handler on form
-  }
-
-  handleSubmit() {
-    // check form for submitted value
-    // if invalid input, handle with message
-    // if valid input, run checkWOrd method
+    $(".add-word", this.board).on("submit", this.handleSubmit.bind(this));
   }
 
   checkWord() {
-    // if valid input, talk to flask API to check word
+    // if valid input, check if duplicate
+    // if not duplicate, talk to flask API to check word
     // if valid word, update list, calculate and update score
   }
 
@@ -51,4 +47,17 @@ class BoggleGame {
   // method: score game
   // steps: get current game score, Flask API to check high score, update UI accordingly
   // update stats
+  async handleSubmit(evt) {
+    evt.preventDefault();
+    console.group("handleSubmit");
+    const $word = $(".word", this.board);
+
+    let word = $word.val();
+    if (!word) return;
+
+    if (this.words.has(word)) {
+      this.showMessage(`Already found ${word}`, "err");
+      return;
+    }
+  }
 }
