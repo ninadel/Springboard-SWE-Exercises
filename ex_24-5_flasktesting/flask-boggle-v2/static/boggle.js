@@ -50,11 +50,13 @@ class BoggleGame {
   async handleSubmit(evt) {
     evt.preventDefault();
     console.group("handleSubmit");
+    // create a jquery object for the word form input
     const $word = $(".word", this.board);
-
+    // get the word entered in the input field
     let word = $word.val();
+    // if there's no word
     if (!word) return;
-
+    // if word is already in the set
     if (this.words.has(word)) {
       this.showMessage(`Already found ${word}`, "err");
       return;

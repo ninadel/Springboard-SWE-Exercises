@@ -33,24 +33,26 @@ def get_current_board():
 # route to check word
 # need check_valid_word method on boggle_game object
 # with board and word as arguments
-@app.route('/check-word', methods=['POST'])
+@app.route('/check-word')
 def check_word():
     """checks submitted word and returns result"""
-    data = request.get_json(silent=True)
-    word = data.get('word')
-    board = session['board']
-    result = boggle_game.check_valid_word(board=board, word=word)
-    return jsonify(result)
+    word = request.args["word"]
+    board = session["board"]
+    response = boggle_game.check_valid_word(board, word)
+
+    return jsonify({'result': response})
+
 
 # route to check score
 # receives last game score from front end, checks against session high score
 # if new high score, return new high score boolean, high score value
 # update high score and game count in session
-@app.route('/check-score', methods=['POST'])
+@app.route('/check-score')
 def check_score():
     """check game score against high score"""
-    data = request.get_json(silent=True)
-    score = int(data.get('score'))
+    score = int(request.args["score"])
+    # data = request.get_json(silent=True)
+    # score = int(data.get('score'))
     high_score = int(session.get('high-score', 0))
-    result = {score > high_score}
+    result = {'result': score > high_score}
     return jsonify(result)
