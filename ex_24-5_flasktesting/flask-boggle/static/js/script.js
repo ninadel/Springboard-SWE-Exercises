@@ -15,21 +15,41 @@
 // timer_sec = 60;
 
 // set a 60 second countdown timer
+let score = 0;
 let endTime = new Date();
+console.log(endTime);
 endTime.setMinutes(endTime.getMinutes() + 1);
+console.log(endTime);
+
+document.getElementById("counter").innerHTML = `Time left: 60`;
 
 const counter = setInterval(function () {
   let now = new Date();
   let distance = endTime - now;
   let seconds = Math.floor((distance % (1000 * 60)) / 1000);
   if (distance < 0) {
+    console.log("timeout");
     clearInterval(counter);
-    document.getElementById("counter").innerHTML = "GAME OVER";
+    game_timeout();
   } else {
     document.getElementById("counter").innerHTML = `Time left: ${seconds}`;
   }
   console.log(seconds);
 }, 1000);
+
+async function game_timeout() {
+  document.getElementById("counter").innerHTML = "GAME OVER";
+  // ajax to go to end game route
+  let response = await axios.post("/api/end-game", { score: score });
+  console.log(response);
+  let gameCount = response.data["game-count"];
+  let highScore = response.data["high-score"];
+  let newHighScore = response.data["new-high-score"];
+  if (newHighScore) {
+    document.getElementById("high-score").innerHTML = `${highScore}!`;
+  }
+  document.getElementById("game-count").innerHTML = gameCount;
+}
 
 // INSTRUCTIONS
 
