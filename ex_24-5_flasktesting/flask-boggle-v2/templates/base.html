@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <h1>Let's play boggle</h1>
+    {% block content %}BODY CONTENT GOES HERE{% endblock %}
+  </body>
+
+  <script src="https://unpkg.com/jquery"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src="/static/js/script.js"></script>
+  <script src="/static/js/boggle.js"></script>
+  <script>
+    let boggle = new BoggleGame();
+  </script>
+</html>

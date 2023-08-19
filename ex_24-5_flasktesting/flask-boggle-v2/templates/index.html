@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block title %}Boggle game{% endblock %} {% block
+content %}
+
+<!-- render boggle board -->
+<div id="game-container">
+  <div id="game-timer">Timer</div>
+  <table id="gameboard">
+    {% for row in board %}
+    <tr class="row">
+      {% for col in row %}
+      <td class="letter">{{col}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <div id="game-form"></div>
+  <div id="game-stats">
+    <!-- keep track of game statistics -->
+    <div id="game-count">Game count</div>
+    <div id="high-score">High score</div>
+  </div>
+  <!-- form controls will be appended to div with js -->
+</div>
+{% endblock %}
