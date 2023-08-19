@@ -1,3 +1,20 @@
+class BoggleGame {
+  // CONSTUCTOR
+  // Flask API to get board
+  // on page refresh, start a new board?
+  // set board
+  // set score: initialize to 0
+  // set word list: initialize to empty
+  // METHODS
+  // show word
+  // show message
+  // handle submit
+  // Flask API to check submitted word
+  // tick timer
+  // score game
+  // update stats
+}
+
 // script should update rendering of board without refreshing
 
 // script will talk to API (via json)
@@ -8,7 +25,7 @@
 
 // script will do the following without API
 // keep track of word list by updating dom using ajax
-// word_list = [];
+const WORD_LIST = [];
 // keep track of current game score by updating dom uxing ajax
 // score = 0;
 // end game with timer
@@ -17,28 +34,35 @@
 // set a 60 second countdown timer
 let score = 0;
 let endTime = new Date();
-console.log(endTime);
 endTime.setMinutes(endTime.getMinutes() + 1);
-console.log(endTime);
 
-document.getElementById("counter").innerHTML = `Time left: 60`;
+counter = document.getElementById("counter");
+counterMessage = "Time left:";
+counter.innerHTML = `${counterMessage} ${60}`;
 
-const counter = setInterval(function () {
+wordForm = document.getElementById("wordForm");
+wordForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  console.log("Submit!");
+  wordInput = document.getElementById("wordInput");
+  console.log(wordInput.value);
+});
+
+const secondCounter = setInterval(function () {
   let now = new Date();
   let distance = endTime - now;
   let seconds = Math.floor((distance % (1000 * 60)) / 1000);
   if (distance < 0) {
-    console.log("timeout");
-    clearInterval(counter);
+    clearInterval(secondCounter);
     game_timeout();
   } else {
-    document.getElementById("counter").innerHTML = `Time left: ${seconds}`;
+    counter.innerHTML = `${counterMessage} ${seconds}`;
   }
   console.log(seconds);
 }, 1000);
 
 async function game_timeout() {
-  document.getElementById("counter").innerHTML = "GAME OVER";
+  counter.innerHTML = "GAME OVER";
   // ajax to go to end game route
   let response = await axios.post("/api/end-game", { score: score });
   console.log(response);
@@ -50,6 +74,8 @@ async function game_timeout() {
   }
   document.getElementById("game-count").innerHTML = gameCount;
 }
+
+function handleWordSubmit() {}
 
 // INSTRUCTIONS
 
