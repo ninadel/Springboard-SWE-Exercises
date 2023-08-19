@@ -8,67 +8,28 @@
 
 // script will do the following without API
 // keep track of word list by updating dom using ajax
-word_list = [];
+// word_list = [];
 // keep track of current game score by updating dom uxing ajax
-score = 0;
+// score = 0;
 // end game with timer
-timer_sec = 60;
+// timer_sec = 60;
 
-$(document).ready(function (event) {
-  $("form")
-    .on("submit", function (event) {
-      $.ajax({
-        data: {
-          word: $("#wordInput").val(),
-        },
-        type: "POST",
-        url: "/check-word",
-      });
-      pass;
-    })
-    .done(function (data) {
-      // what to do with the feedback
-      if (data.error) {
-        $("#errorAlert").text(data.error).show();
-        $("#successAlert").hide();
-      } else {
-        $("#successAlert").text(data.name).show();
-        $("#errorAlert").hide();
-      }
-    });
-  event.preventDefault();
-});
+// set a 60 second countdown timer
+let endTime = new Date();
+endTime.setMinutes(endTime.getMinutes() + 1);
 
-// $(document).ready(function() {
-
-// 	$('form').on('submit', function(event) {
-
-// 		$.ajax({
-// 			data : {
-// 				name : $('#nameInput').val(),
-// 				email : $('#emailInput').val()
-// 			},
-// 			type : 'POST',
-// 			url : '/process'
-// 		})
-// 		.done(function(data) {
-
-// 			if (data.error) {
-// 				$('#errorAlert').text(data.error).show();
-// 				$('#successAlert').hide();
-// 			}
-// 			else {
-// 				$('#successAlert').text(data.name).show();
-// 				$('#errorAlert').hide();
-// 			}
-
-// 		});
-
-// 		event.preventDefault();
-
-// 	});
-
-// });
+const counter = setInterval(function () {
+  let now = new Date();
+  let distance = endTime - now;
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  if (distance < 0) {
+    clearInterval(counter);
+    document.getElementById("counter").innerHTML = "GAME OVER";
+  } else {
+    document.getElementById("counter").innerHTML = `Time left: ${seconds}`;
+  }
+  console.log(seconds);
+}, 1000);
 
 // INSTRUCTIONS
 

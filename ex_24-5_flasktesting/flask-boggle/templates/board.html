@@ -4,6 +4,7 @@ content %}
 <!-- keep track of game statistics -->
 <div id="game-count">Game count: {{game_count}}</div>
 <div id="high-score">High Score: {{high_score}}</div>
+<div id="counter"></div>
 
 <!-- render boggle board -->
 <table id="board">
@@ -15,14 +16,14 @@ content %}
   </tr>
   {% endfor %}
 </table>
-<form>
+<form id="wordForm">
   <!-- listen for enter key or check word button press -->
   <!-- form to guess words -->
   <!-- see fruit search project to suppress default behavior -->
-  <input type="text" name="word" />
-  <button>Check word</button>
+  <input type="text" id="wordInput" />
+  <button type="submit">Check word</button>
 </form>
-<form action="/new-game" method="POST">
+<!-- <form id="reset" action="/new-game" method="POST">
   <button>New Game</button>
-</form>
+</form> -->
 {% endblock %}
