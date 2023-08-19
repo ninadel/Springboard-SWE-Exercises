@@ -13,6 +13,7 @@ STATE_KEY = "game-state"
 BOARD_KEY = "gameboard"
 SCORE_KEY = "high-score"
 COUNT_KEY = "game-count"
+# GAMEOVER_KEY = "game-over"
 
 # CURRENT_SCORE_KEY = "current-score"
 # GAME_OVER_KEY = "game-over"
@@ -52,6 +53,7 @@ def home_page():
         board = session[STATE_KEY][BOARD_KEY]
         game_count = session[STATE_KEY][COUNT_KEY]
         high_score = session[STATE_KEY][SCORE_KEY]
+        # game_over = session[STATE_KEY][GAMEOVER_KEY]
         return render_template("board.html", board=board, game_count=game_count, high_score=high_score)
     else: 
         return redirect("/new-game")
@@ -63,21 +65,24 @@ def new_game():
     b = Boggle()
     # save new board to session
     new_board = b.make_board()
-    # save state data if it doesn't exist
+    # initialize and save state data if it doesn't exist
     if session.get(STATE_KEY) is None:
         session[STATE_KEY] = {
             BOARD_KEY: new_board,
             SCORE_KEY: 0,
             COUNT_KEY: 0,
+            # GAMEOVER_KEY: False,
         }
+    # if state data exists, use existing state data
     else:
         high_score = session[STATE_KEY][SCORE_KEY]
         game_count = session[STATE_KEY][COUNT_KEY]
-        # save state data if it does exist
+        # if game is over, save state data with new board
         session[STATE_KEY] = {
             BOARD_KEY: new_board,
             SCORE_KEY: high_score,
             COUNT_KEY: game_count,
+            # GAMEOVER_KEY: False,
         }
     return redirect("/")
 
@@ -90,18 +95,18 @@ def check_word():
     result = {}
     return jsonify(result)
 
-@app.route('/end-game', methods=['POST'])
-def end_game():
-    """Ends game and updates/returns game statistics"""
-    # get score from completed game and compare to high score
-    high_score = session[STATE_KEY][SCORE_KEY]
-    game_count = session[STATE_KEY][COUNT_KEY]
-    # session[GAME_OVER_KEY] = True
-    game_count += 1
-    session[COUNT_KEY] = game_count
-    # check high score
-    end_game ={}
-    return jsonify(end_game)
+# @app.route('/end-game', methods=['POST'])
+# def end_game():
+#     """Ends game and updates/returns game statistics"""
+#     # get score from completed game and compare to high score
+#     high_score = session[STATE_KEY][SCORE_KEY]
+#     game_count = session[STATE_KEY][COUNT_KEY]
+#     # session[GAME_OVER_KEY] = True
+#     game_count += 1
+#     session[COUNT_KEY] = game_count
+#     # check high score
+#     end_game ={}
+#     return jsonify(end_game)
  
 @app.route('/api/get')
 def get_board():
@@ -109,3 +114,27 @@ def get_board():
     if session.get(BOARD_KEY) is None:
         get_new_board()
     return jsonify(session[BOARD_KEY])
+
+@app.route('/api/end-game', methods=['POST'])
+def end_game_api():
+    """Ends game and updates/returns game statistics"""
+    new_high_score = False
+    data = request.get_json(silent=True)
+    score = data.get('score')
+    # get score from completed game and compare to high score
+    board = session[STATE_KEY][BOARD_KEY]
+    high_score = session[STATE_KEY][SCORE_KEY]
+    game_count = session[STATE_KEY][COUNT_KEY]
+    # increment game count
+    game_count += 1
+    # check high score
+    if score > high_score:
+        high_score = score
+        new_high_score = True
+    session[STATE_KEY] = {
+        BOARD_KEY: board,
+        SCORE_KEY: high_score,
+        COUNT_KEY: game_count,
+    }
+    result = {"new-high-score": new_high_score, "high-score": high_score, "game-count": game_count}
+    return jsonify(result)
