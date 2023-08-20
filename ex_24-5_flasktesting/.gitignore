@@ -1,6 +1,0 @@
-
-.DS_Store
-/flask-boggle/venv
-/flask-boggle-v2/venv
-
-*__pycache__*
